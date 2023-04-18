@@ -39,3 +39,37 @@ def getNotes(request):
     notes = user.note_set.all()
     serializer = NoteSerializer(notes, many=True)
     return Response(serializer.data)
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def addNote(request):
+    serializer = NoteSerializer(data=request.data)
+
+    if serializer.is_valid():
+        serializer.save()
+
+    return Response(serializer.data)
+
+#Atualizar Note.
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated])
+def updateNote(request, pk):
+    Note = Note.objects.get(id=pk)
+    serializer = NoteSerializer(instance=Note, data=request.data)
+
+    if serializer.is_valid():
+        serializer.save()
+    
+    return Response(serializer.data)
+
+#delete Note.
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
+def deleteNote(request, pk):
+    Note = Note.objects.get(id=pk)
+    if Note == None:
+        return Response({"status": "fail", "message": f"Note with Id: {pk} not found"}, status=status.HTTP_404_NOT_FOUND)
+    Note.delete()
+
+    return Response('O item foi deletado!')
