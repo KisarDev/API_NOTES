@@ -1,8 +1,11 @@
-from rest_framework import status
-from rest_framework.authentication import TokenAuthentication
+from django.contrib.auth.models import User
+from rest_framework import generics, status
+from rest_framework.authentication import (BasicAuthentication,
+                                           SessionAuthentication,
+                                           TokenAuthentication)
 from rest_framework.decorators import (api_view, authentication_classes,
                                        permission_classes)
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
@@ -10,7 +13,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from base.models import Note
 
 from .permissions import IsOwnerOrReadOnly
-from .serializers import NoteSerializer
+from .serializers import NoteSerializer, UserSerializer
 
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
@@ -106,3 +109,9 @@ def readNoteById(request, note_id):
 
     serializer = NoteSerializer(note)
     return Response(serializer.data)
+
+
+class CreateUserView(generics.CreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = [AllowAny]

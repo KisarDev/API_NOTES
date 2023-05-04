@@ -3,8 +3,8 @@ from rest_framework.urlpatterns import format_suffix_patterns
 from rest_framework_simplejwt.views import (TokenObtainPairView,
                                             TokenRefreshView)
 
-from .views import (MyTokenObtainPairView, addNote, deleteNote, getNotes,
-                    getRoutes, readNoteById, updateNote)
+from .views import (CreateUserView, MyTokenObtainPairView, addNote, deleteNote,
+                    getNotes, getRoutes, readNoteById, updateNote)
 
 urlpatterns = [
     path('', getRoutes, name="routes"),
@@ -19,4 +19,5 @@ urlpatterns = [
     path('notes/update/<int:pk>/', updateNote, name='update_note'),
     path('notes/delete/<int:pk>/', deleteNote, name='delete_note'),
     path('note/<int:note_id>/', readNoteById, name='get_note_by_id'),
+    path('users/create', CreateUserView.as_view(), name='create_user'),
 ]
