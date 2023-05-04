@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from django.shortcuts import get_object_or_404
 from rest_framework import generics, status
 from rest_framework.authentication import (BasicAuthentication,
                                            SessionAuthentication,
@@ -115,3 +116,13 @@ class CreateUserView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = [AllowAny]
+
+    def perform_create(self, serializer):
+        username = serializer.validated_data['username']
+        user_exists = User.objects.filter(username=username).exists()
+        if user_exists:
+            return Response({'error': 'Este nome de usuário já existe.'}, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            serializer.save()
+            return Response({'success': 'Usuário criado com sucesso.'}, status=status.HTTP_201_CREATED)
+
