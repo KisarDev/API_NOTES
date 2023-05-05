@@ -8,9 +8,8 @@ class Note(models.Model):
     title = models.CharField(max_length=100, default='')
     content = models.CharField(max_length=300, default='')
     finished = models.BooleanField(default=False, blank=True)
-    createData = models.DateField(auto_now_add=True)
-    finishedData = models.DateField(null=True, blank=True)
-
+    cData = models.CharField(null=True, blank=True, max_length=15)
+    fData = models.CharField(null=True, blank=True, max_length=15)
 
     def __str__(self):
         return f'Title : {self.title}'
