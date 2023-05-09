@@ -48,12 +48,12 @@ INSTALLED_APPS = [
 
 
 REST_FRAMEWORK = {
-    
+
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        
+
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     )
-   
+
 }
 
 
@@ -100,7 +100,6 @@ SIMPLE_JWT = {
 }
 
 
-
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
 
@@ -140,8 +139,12 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'notes_zx0o',
+        'USER': 'notes_zx0o_user',
+        'PASSWORD': 'vvSSopq3Ym7sgNjjnUTMwy8j8Z5oIb1C',
+        'HOST': 'dpg-chce4sbhp8u0166u4m90-a.oregon-postgres.render.com',
+        'PORT': '5432',
     }
 }
 
@@ -181,6 +184,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
+MEDIA_URL = 'media/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
