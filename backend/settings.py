@@ -26,7 +26,7 @@ load_dotenv()  # take environment variables from .env.
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'chave'
+SECRET_KEY = os.getenv('chave')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -144,11 +144,14 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'motor',
-        'NAME': 'name_db',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': os.getenv('name_db'),
+        'USER': os.getenv('user'),
+        'PASSWORD': os.getenv('senha'),
+        'HOST': os.getenv('host'),
+        'PORT': '5432',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
